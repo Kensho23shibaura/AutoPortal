@@ -59,14 +59,31 @@ class SourceCounterApp(ctk.CTk):
         result = self.count_source_lines(folder_path, exclude_list, ext_list)
 
         display_result = ""
+        total_files = 0
+        total_lines = 0
+        total_empty_lines = 0
+        total_comment_lines = 0
         for ext, counts in result.items():
             display_result += (
                 f"拡張子: .{ext}\n"
                 f"ファイル数: {counts['file_count']}\n"
                 f"全体行数: {counts['total_lines']}\n"
-                f"コメント行数: {counts['comment_lines']}\n"
-                f"空行数: {counts['empty_lines']}\n\n"
+                f"空行数: {counts['empty_lines']}\n"
+                f"コメント行数: {counts['comment_lines']}\n\n"
             )
+            total_files += counts['file_count']
+            total_lines += counts['total_lines']
+            total_empty_lines += counts['empty_lines']
+            total_comment_lines += counts['comment_lines']
+
+        display_result += (
+            f"合計:\n"
+            f"ファイル数: {total_files}\n"
+            f"全体行数: {total_lines}\n"
+            f"空行数: {total_empty_lines}\n"
+            f"コメント行数: {total_comment_lines}\n\n"
+        )
+
         self.result_text.delete(1.0, ctk.END)
         self.result_text.insert(ctk.END, display_result)
 
@@ -84,13 +101,12 @@ class SourceCounterApp(ctk.CTk):
                 # 拡張子の確認と処理
                 file_ext = os.path.splitext(file)[1][1:].lower()
                 if file_ext in ext_list:
-                    print(file_path)
                     with open(file_path, "r", encoding="utf-8") as f:
                         lines = f.readlines()
 
                     total_lines = len(lines)
                     blank_lines = sum(1 for line in lines if not line.strip())
-                    comment_lines = sum(1 for line in lines if line.strip().startswith("#"))
+                    comment_lines = sum(1 for line in lines if line.strip().startswith("#") or line.strip().startswith("//"))
 
                     ext_counts[file_ext]["file_count"] += 1
                     ext_counts[file_ext]["total_lines"] += total_lines
