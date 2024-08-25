@@ -23,6 +23,9 @@ class MenuApp(ctk.CTk):
             "簡易メモツール": "app_SimpleMemo.py",
             "自動複製ツール": "app_AutoCopy.py",
             "自動カレンダーツール": "app_AutoCalender.py",
+            "マクロ生成ツール": "app_ActionMaker.py",
+            "マクロ実行ツール": "app_ActionPlayer.py",
+            "ソースカウンターツール": "app_SourceCounter.py",
             "外部アプリケーション": "C:/path/to/your/application.exe",  # 例: exeファイルのパス
             "バッチファイル": "C:/path/to/your/script.bat"  # 例: batファイルのパス
         }
