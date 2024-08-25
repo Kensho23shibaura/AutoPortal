@@ -40,13 +40,17 @@ class TaskMemoTool(ctk.CTk):
         return ""
 
     def setting_gui(self):
+        # ウィンドウの行と列の重みを設定して、リサイズ時にウィジェットが拡大縮小するようにする
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=1)        
+
         # テキスト入力欄
         self.text_box = ctk.CTkTextbox(self, wrap="word", width=380, height=200)
-        self.text_box.pack(pady=20)
+        self.text_box.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
         # 保存ボタン
         save_button = ctk.CTkButton(self, text="保存", command=self.save_file_content, fg_color="red")
-        save_button.pack(pady=10)
+        save_button.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
 
     def load_file_content(self):
         # ファイルから内容を読み込んでテキストボックスに表示
